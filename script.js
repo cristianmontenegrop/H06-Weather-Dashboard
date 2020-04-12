@@ -184,7 +184,7 @@ function getWeatherApi(wData, status, tree) {
 // PENDING!!!!
 function getTodaysWeather(wData1) {
 
-    // console.log(wData1);
+
 
     // UV Index call 
     var cityLat = wData1.coord.lat;
@@ -194,8 +194,40 @@ function getTodaysWeather(wData1) {
         url: queryUrl,
         method: "GET"
     }).then(function (uvResponse) {
-        $("#todays-uv-index").text("UV Index: " + uvResponse.value);
-    })
+        $("#uv-index-badge").removeAttr("background-color");
+        console.log($("#todays-uv-index"));
+        $("#todays-uv-index").text(uvResponse.value);
+        console.log(parseInt(uvResponse.value));
+
+
+        // manage changing color box around uv-index reading
+        //  green 0-2, yellow 3-5, orange 6-7, red 8-10, violet 11+
+        if (parseInt(uvResponse.value) <= 2) {
+            // $("#todays-uv-index").removeAttr("style");
+            console.log(this)
+            $("#uv-index-badge").attr("style", "background-color: green");
+        } else if (parseInt(uvResponse.value) <= 5) {
+            console.log(this)
+            // $("#todays-uv-index").removeAttr("style");
+            $("#uv-index-badge").attr("style", "background-color: yellow")
+        } else if (parseInt(uvResponse.value) <= 7) {
+            console.log(this)
+            // $("#todays-uv-index").removeAttr("style");
+            $("#uv-index-badge").attr("style", "background-color: orange")
+        } else if (parseInt(uvResponse.value) <= 10) {
+            console.log(this)
+            // $("#todays-uv-index").removeAttr("style");
+            $("#uv-index-badge").attr("style", "background-color: red")
+        } else if (parseInt(uvResponse.value) >= 11) {
+            console.log(this)
+            // $("#todays-uv-index").removeAttr("style");
+            $("#uv-index-badge").attr("style", "background-color: purple; color:white;")
+            // $("#todays-uv-index").attr("class", "pr-1")
+            // $("#todays-uv-index").css("background-size", '60px 120px');
+        };
+        // $("#todays-uv-index").removeAttr("style")
+    });
+
 
     // Push weather data into html
     var tempIconUrl = "http://openweathermap.org/img/wn/" + wData1.weather[0].icon + "@2x.png";
@@ -208,15 +240,11 @@ function getTodaysWeather(wData1) {
     $("#todays-humidity").text("Humidity: " + wData1.main.humidity + " %");
     $("todays-wind-speed").text("Wind Speed: " + wData1.wind.speed + "MPH");
     saveInDataList(wData1);
-
 }
 
 
 //      Create Function get5DayWeather
 function get5DayWeather(wData, status, Tree) {
-    // console.log(wData);
-    // console.log(status);
-    // console.log(Tree);
 
     // eliminate previous content from the forecast cards
     $(".forecast-cards").empty();
@@ -230,10 +258,7 @@ function get5DayWeather(wData, status, Tree) {
         forecastCard = $('<div style="width:18%" class="card-blue-forecast bg-primary text-white card card-body m-2"><h5>' + weatherDateCard + '</h5><img src= ' + weatherIconURL + '><p>Temperature: ' + tempF.toFixed(1) + ' ˚F</p><p>Humidity: ' + forecastToLoop.humidity + ' % </p></div>');
         $(".forecast-cards").append(forecastCard);
     }
-
 }
-
-
 
 $("#search-button").on("click", function (event) {
     event.preventDefault();
