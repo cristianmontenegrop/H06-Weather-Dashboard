@@ -68,49 +68,81 @@
 // updatePage is the function that commands both functions that populate the webpage with the result
 var weatherDate;
 var weatherSliced;
-var cityQuery;
-var storedWeatherSearch;
+var cityQuery = $("#city-input").val();
+// var wData1;
+// var storedWeatherSearch;
+var myWeatherData = [];
+var forecastCard;
 
-$("#search-button").on("click", getXMLDataFirst);
 
-// Create Function "manageDataList"
-// push those elements in a list
-// each created button generates a call with the corresponding city
-// localStorage.setItem("citySearch", JSON.stringify())
-//      Create Function "createDataList"
-// pull local storage if any, as a list 
-// create a loop to run the strings in the list
+$(document).ready(loadDataList);
 
-function manageDataList() {
+function loadDataList() {
     // console.log("manageDataList RAN")
     if (localStorage.myWeatherData == null) {} else {
-        storedWeatherSearch = JSON.parse(localStorage.getItem("myWeatherData"));
+
+        myWeatherData = JSON.parse(localStorage.getItem("myWeatherData"));
+        console.log(myWeatherData);
+
+        // Code that prevents duplicat cities to be present in the list.
+        var myWeatherDataUniqueStrings = [];
+        $.each(myWeatherData, function (i, el) {
+            if ($.inArray(el, myWeatherDataUniqueStrings) === -1) myWeatherDataUniqueStrings.push(el);
+        });
+        localStorage.setItem("myWeatherData", JSON.stringify(myWeatherDataUniqueStrings));
+
+        // append elements from the array to the .list-group Element.
+        for (i = 0; i < myWeatherDataUniqueStrings.length; i++) {
+            $(".list-group").append("<li class='list-group-item'> " + myWeatherDataUniqueStrings[i] + "</li>");
+        }
+
     }
+};
+// loadDataList();
 
-    // append elements from the array to the .list-group Element.
-    for (i = 0; i < storedWeatherSearch.length; i++) {
-        $(".list-group").append("<li class='list-group-item'> " + myWeatherData[i] + "</li>");
-    }
+// $(document).ready(runSavedSearch);
 
+function runSavedSearch(event) {
+    // event.preventDefault();
+    cityQuery = $(this).text();
+    console.log($(this).text());
+    getXMLDataFirst(cityQuery);
+};
 
-
-
-}
-manageDataList();
 
 
 // Save on the array every time user searches
-function saveInDataList() {
+function saveInDataList(wData1) {
+    // console.log(wData1.name)
+    // var i = 1;
+    myWeatherData.unshift(wData1.name);
+    // console.log(myWeatherDataX);
+    // var myWeatherData3 = new Set(myWeatherData);
+    // console.log(myWeatherData3);
     localStorage.setItem("myWeatherData", JSON.stringify(myWeatherData))
+    // i++;
+    // console.log(myWeatherData);
+    // console.log(cityQuery);
+    // console.log(i);
 
+    // clear current content on the list
+    $(".list-group").empty();
+    // reload array from local storage
+    loadDataList();
 }
 
 
 
 // Ajax call XML file for date retrieval
-function getXMLDataFirst(event) {
-    event.preventDefault();
-    cityQuery = $("#city-input").val();
+// $(document).ready(getXMLDataFirst);
+
+function getXMLDataFirst() {
+
+
+
+
+    cityQuery;
+    //  = $("#city-input").val();
     var queryUrl3 = "https://api.openweathermap.org/data/2.5/forecast/daily?q=" + cityQuery + "&mode=xml&cnt=5&appid=166a433c57516f51dfab1f7edaed8413";
     $.ajax({
         url: queryUrl3,
@@ -118,21 +150,17 @@ function getXMLDataFirst(event) {
     }).then(getWeatherApi)
 }
 
-function getWeatherApi(wData, status, tree, event) {
 
-    console.log(wData);
-    console.log(status);
-    console.log(tree);
+function getWeatherApi(wData, status, tree) {
+
+    // console.log(wData);
+    // console.log(status);
+    // console.log(tree);
     weatherDate = tree.responseXML.all[13].childNodes[0].attributes[0].value;
     // weatherDate = JSON.stringify(weatherDate)
     weatherSliced = weatherDate.split("-");
-    console.log(weatherSliced);
-
-
+    // console.log(weatherSliced);
     // event.preventDefault();
-
-    // clear();
-
 
     // Ajax call current weather
     var queryUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + cityQuery + "&appid=166a433c57516f51dfab1f7edaed8413";
@@ -147,77 +175,70 @@ function getWeatherApi(wData, status, tree, event) {
         url: queryUrl2,
         method: "GET"
     }).then(get5DayWeather)
-
-
-
-
 };
 
 
-
-
-
-
-
-
-
-
 //      Create Function "getTodaysWeather" 
-// Use received array to manipulate the DOM of the corresponding displayed info
-// City Name
-// Date of such forecast
-// Temperature
-// Humidity
-// Wind-speed
-// UV Index
-function getTodaysWeather(wData) {
-    console.log(wData);
+
+// UV Index Color changing Box 
+// PENDING!!!!
+function getTodaysWeather(wData1) {
+
+    // console.log(wData1);
 
     // UV Index call 
-    var cityLat = wData.coord.lat;
-    var cityLon = wData.coord.lon;
+    var cityLat = wData1.coord.lat;
+    var cityLon = wData1.coord.lon;
     var queryUrl = "https://api.openweathermap.org/data/2.5/uvi?appid=166a433c57516f51dfab1f7edaed8413&lat=" + cityLat + "&lon=" + cityLon;
     $.ajax({
         url: queryUrl,
         method: "GET"
     }).then(function (uvResponse) {
-        console.log(uvResponse);
         $("#todays-uv-index").text("UV Index: " + uvResponse.value);
     })
 
-    var tempIconUrl = "http://openweathermap.org/img/wn/" + wData.weather[0].icon + "@2x.png";
+    // Push weather data into html
+    var tempIconUrl = "http://openweathermap.org/img/wn/" + wData1.weather[0].icon + "@2x.png";
     $("#city-icon-div").append('<img id="city-img">');
     $("#city-img").attr("src", tempIconUrl)
-    var tempF = (wData.main.temp - 273.15) * 1.80 + 32;
+    var tempF = (wData1.main.temp - 273.15) * 1.80 + 32;
     weatherDate = weatherSliced[1] + "-" + weatherSliced[2] + "-" + weatherSliced[0]
-    $("#city-title").text(wData.name + " " + weatherDate);
+    $("#city-title").text(wData1.name + " " + weatherDate);
     $("#todays-temperature").text("Temperature: " + tempF.toFixed(1) + " ˚F");
-    $("#todays-humidity").text("Humidity: " + wData.main.humidity + " %");
-    $("todays-wind-speed").text("Wind Speed: " + wData.wind.speed + "MPH");
+    $("#todays-humidity").text("Humidity: " + wData1.main.humidity + " %");
+    $("todays-wind-speed").text("Wind Speed: " + wData1.wind.speed + "MPH");
+    saveInDataList(wData1);
 
 }
 
 
 //      Create Function get5DayWeather
-// Use received array to manipulate the DOM of the 5 blocks
-// create a main design
-// run design through loop to display 5 days of forecast  
-// Date
-// Weather font
-// Temperature
-// Humidity
-
 function get5DayWeather(wData, status, Tree) {
-    console.log(wData);
-    console.log(status);
-    console.log(Tree);
+    // console.log(wData);
+    // console.log(status);
+    // console.log(Tree);
+
+    // eliminate previous content from the forecast cards
+    $(".forecast-cards").empty();
+
     for (i = 0; i < wData.list.length; i++) {
         var weatherForecastDay = JSON.parse(weatherSliced[2])
         var weatherDateCard = weatherSliced[1] + "-" + (weatherForecastDay + i + 1) + "-" + weatherSliced[0]
         var forecastToLoop = wData.list[i];
         var tempF = (forecastToLoop.temp.day - 273.15) * 1.80 + 32;
         var weatherIconURL = "http://openweathermap.org/img/wn/" + forecastToLoop.weather[0].icon + "@2x.png";
-        var forecastCard = $('<div style="width:18%" class="card-blue-forecast bg-primary text-white card card-body m-2"><h5>' + weatherDateCard + '</h5><img src= ' + weatherIconURL + '><p>Temperature: ' + tempF.toFixed(1) + ' ˚F</p><p>Humidity: ' + forecastToLoop.humidity + ' % </p></div>');
+        forecastCard = $('<div style="width:18%" class="card-blue-forecast bg-primary text-white card card-body m-2"><h5>' + weatherDateCard + '</h5><img src= ' + weatherIconURL + '><p>Temperature: ' + tempF.toFixed(1) + ' ˚F</p><p>Humidity: ' + forecastToLoop.humidity + ' % </p></div>');
         $(".forecast-cards").append(forecastCard);
     }
+
 }
+
+
+
+$("#search-button").on("click", function (event) {
+    event.preventDefault();
+    cityQuery = $("#city-input").val();
+    getXMLDataFirst(cityQuery);
+});
+
+$(".list-group").on("click", "li", runSavedSearch);
