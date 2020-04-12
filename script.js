@@ -205,19 +205,19 @@ function getTodaysWeather(wData1) {
         if (parseInt(uvResponse.value) <= 2) {
             // $("#todays-uv-index").removeAttr("style");
             console.log(this)
-            $("#uv-index-badge").attr("style", "background-color: #009900");
+            $("#uv-index-badge").attr("style", "background-color: #009900 color:white;");
         } else if (parseInt(uvResponse.value) <= 5) {
             console.log(this)
             // $("#todays-uv-index").removeAttr("style");
-            $("#uv-index-badge").attr("style", "background-color: #ffcc00")
+            $("#uv-index-badge").attr("style", "background-color: #ffcc00 color:white;")
         } else if (parseInt(uvResponse.value) <= 7) {
             console.log(this)
             // $("#todays-uv-index").removeAttr("style");
-            $("#uv-index-badge").attr("style", "background-color: #ff9900")
+            $("#uv-index-badge").attr("style", "background-color: #ff9900 color:white;")
         } else if (parseInt(uvResponse.value) <= 10) {
             console.log(this)
             // $("#todays-uv-index").removeAttr("style");
-            $("#uv-index-badge").attr("style", "background-color: #ff0000")
+            $("#uv-index-badge").attr("style", "background-color: #ff0000 color:white;")
         } else if (parseInt(uvResponse.value) >= 11) {
             console.log(this)
             // $("#todays-uv-index").removeAttr("style");
