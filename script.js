@@ -205,23 +205,23 @@ function getTodaysWeather(wData1) {
         if (parseInt(uvResponse.value) <= 2) {
             // $("#todays-uv-index").removeAttr("style");
             console.log(this)
-            $("#uv-index-badge").attr("style", "background-color: green");
+            $("#uv-index-badge").attr("style", "background-color: #009900");
         } else if (parseInt(uvResponse.value) <= 5) {
             console.log(this)
             // $("#todays-uv-index").removeAttr("style");
-            $("#uv-index-badge").attr("style", "background-color: yellow")
+            $("#uv-index-badge").attr("style", "background-color: #ffff00")
         } else if (parseInt(uvResponse.value) <= 7) {
             console.log(this)
             // $("#todays-uv-index").removeAttr("style");
-            $("#uv-index-badge").attr("style", "background-color: orange")
+            $("#uv-index-badge").attr("style", "background-color: #ff9900")
         } else if (parseInt(uvResponse.value) <= 10) {
             console.log(this)
             // $("#todays-uv-index").removeAttr("style");
-            $("#uv-index-badge").attr("style", "background-color: red")
+            $("#uv-index-badge").attr("style", "background-color: #ff0000")
         } else if (parseInt(uvResponse.value) >= 11) {
             console.log(this)
             // $("#todays-uv-index").removeAttr("style");
-            $("#uv-index-badge").attr("style", "background-color: purple; color:white;")
+            $("#uv-index-badge").attr("style", "background-color: #990099; color:white;")
             // $("#todays-uv-index").attr("class", "pr-1")
             // $("#todays-uv-index").css("background-size", '60px 120px');
         };
