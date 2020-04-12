@@ -209,7 +209,7 @@ function getTodaysWeather(wData1) {
         } else if (parseInt(uvResponse.value) <= 5) {
             console.log(this)
             // $("#todays-uv-index").removeAttr("style");
-            $("#uv-index-badge").attr("style", "background-color: #ffff00")
+            $("#uv-index-badge").attr("style", "background-color: #ffcc00")
         } else if (parseInt(uvResponse.value) <= 7) {
             console.log(this)
             // $("#todays-uv-index").removeAttr("style");
