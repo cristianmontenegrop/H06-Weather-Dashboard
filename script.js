@@ -238,7 +238,7 @@ function getTodaysWeather(wData1) {
     $("#city-title").text(wData1.name + " " + weatherDate);
     $("#todays-temperature").text("Temperature: " + tempF.toFixed(1) + " ˚F");
     $("#todays-humidity").text("Humidity: " + wData1.main.humidity + " %");
-    $("todays-wind-speed").text("Wind Speed: " + wData1.wind.speed + "MPH");
+    $("#todays-wind-speed").text("Wind Speed: " + wData1.wind.speed + "MPH");
     saveInDataList(wData1);
 }
 
