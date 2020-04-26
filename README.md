@@ -1,5 +1,8 @@
 # H06-Weather-Dashboard
 
+Git Hub Repo: https://github.com/cristianmontenegrop/H06-Weather-Dashboard
+Deployed Project: https://cristianmontenegrop.github.io/H06-Weather-Dashboard/
+
 In this activity, a Weather Dashboard was created using information provided from "Open Weather" Via their API.
 
 The key concept is to display content regarding weather conditions from the searched location in the format of City name.
