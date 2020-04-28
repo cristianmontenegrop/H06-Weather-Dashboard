@@ -1,5 +1,9 @@
 # H06-Weather-Dashboard
 
+![App Image](./assets/images/weather-dashboard-app-demo-image.png)
+
+
+
 Git Hub Repo: https://github.com/cristianmontenegrop/H06-Weather-Dashboard
 Deployed Project: https://cristianmontenegrop.github.io/H06-Weather-Dashboard/
 
