@@ -6,7 +6,7 @@
 
  Weather Dashboard is an app that provides a forecast info for a specific location based on city name, Search history is stored in the local browser memory allocation and displayed on the left side as a list. Real time data is acquired from a server side API the infromation obtained is provided to the user in a friendly interface through a web browser, the information that is displayed is:
  
-* 1 day detailed weather forecast containing:
+# 1 day detailed weather forecast containing:
 
 - Average Day Temperature
 - Humidity
@@ -14,7 +14,7 @@
 - Wind Speed
 - Sky-view icon
 
-* 5 day weather forecast containing:
+# 5 day weather forecast containing:
 
 - Forecast date
 - Sky-view icon
@@ -34,7 +34,7 @@ A demo version of the application has been deployed to [Github](https://cristian
 
 ## More Info
 
-The Github for this project can be found here [Github](https://github.com/cristianmontenegrop/H06-Weather-Dashboard)
+The Github for this project can be found here [Github repo](https://github.com/cristianmontenegrop/H06-Weather-Dashboard)
 
 
 This project was created by **Cristian Montenegro**
